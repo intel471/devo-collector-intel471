@@ -1,0 +1,11 @@
+{
+  "title": "<vendor_name> <product_name> collector - Integrations Factory",
+  "package_name": "<vendor_name>_<product_name>",
+  "version": "1.0.0",
+  "version_description": "<collector_description>",
+  "labels": ["label_1", "label_1"],
+  "collector_type": "continuous",
+  "package_description": "The collector retrieves events information from blah, blah, blah",
+  "owner": "aaa.bbb@domain.com",
+  "allow_validation": "0"
+}

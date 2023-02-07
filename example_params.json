@@ -1,0 +1,104 @@
+{
+  "global_overrides": {
+    "debug": false
+  },
+  "inputs": {
+    "example_input": {
+      "id": "<short_unique_id>",
+      "enabled": true,
+      "credentials": {
+        "username": "john_doe",
+        "password": "1234"
+      },
+      "environment": "prod",
+      "requests_limits": [
+        {
+          "period": "1d",
+          "number_of_requests": -1
+        },
+        {
+          "period": "1h",
+          "number_of_requests": -1
+        },
+        {
+          "period": "1m",
+          "number_of_requests": -1
+        },
+        {
+          "period": "1s",
+          "number_of_requests": -1
+        }
+      ],
+      "services": {
+        "service_1": {
+          "request_period_in_seconds": 15,
+          "connection_str": "Endpoint=sb://<name>.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=<access_key_value>"
+        },
+        "rate_limiter_1": {
+          "request_period_in_seconds": 5,
+          "requests_limits": [
+            {
+              "period": "1d",
+              "number_of_requests": -1
+            },
+            {
+              "period": "1h",
+              "number_of_requests": -1
+            },
+            {
+              "period": "1m",
+              "number_of_requests": -1
+            },
+            {
+              "period": "1s",
+              "number_of_requests": -1
+            }
+          ]
+        },
+        "template_example_puller_1": {
+          "request_period_in_seconds": 5,
+          "obfuscation_data": [
+            {
+              "name": [
+                "civil_state",
+                "married"
+              ]
+            },
+            {
+              "name": [
+                "address",
+                "*"
+              ]
+            },
+            {
+              "name": [
+                "civil_state",
+                "sons",
+                "*"
+              ],
+              "value": "DEVO"
+            }
+          ],
+          "requests_limits": [
+            {
+              "period": "1d",
+              "number_of_requests": -1
+            },
+            {
+              "period": "1h",
+              "number_of_requests": -1
+            },
+            {
+              "period": "1m",
+              "number_of_requests": -1
+            },
+            {
+              "period": "1s",
+              "number_of_requests": -1
+            }
+          ]
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,9 @@
+# Global requirement
+pip==23.0
+setuptools==67.1.0
+wheel==0.38.4
+devo-collector-sdk==1.6.1
+cryptography==38.0.4
+
+# Used by collector modules
+Faker==15.3.3
