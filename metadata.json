@@ -1,11 +1,11 @@
 {
-  "title": "<vendor_name> <product_name> collector - Integrations Factory",
-  "package_name": "<vendor_name>_<product_name>",
+  "title": "Intel 471 Malware Intelligence collector - Integrations Factory",
+  "package_name": "intel471_malware_intel",
   "version": "1.0.0",
-  "version_description": "<collector_description>",
-  "labels": ["label_1", "label_1"],
+  "version_description": "Initial version of Intel 471 Malware Intel collector for Devo",
+  "labels": ["malware", "intelligence", "indicators"],
   "collector_type": "continuous",
-  "package_description": "The collector retrieves events information from blah, blah, blah",
-  "owner": "aaa.bbb@domain.com",
+  "package_description": "The collector retrieves events information from Intel 471 TITAN API's Indicators endpoint",
+  "owner": "mchong@intel471.com",
   "allow_validation": "0"
 }
