@@ -7,3 +7,4 @@ cryptography==38.0.4
 
 # Used by collector modules
 Faker==15.3.3
+Titan-Client~=1.19.3
