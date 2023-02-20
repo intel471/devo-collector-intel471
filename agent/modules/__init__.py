@@ -1,1 +1,1 @@
-from .intel471 import *
+from .intel471_malware_intel import *
