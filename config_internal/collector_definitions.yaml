@@ -58,7 +58,6 @@ collector_inputs:
             - credentials
             - username
           string_patterns:
-            - ^john_(.*)$
         - name:
             - inputs
             - intel471_input
@@ -66,15 +65,6 @@ collector_inputs:
             - password
           value: "****"
     services:
-      custom_service:
-        type: custom
-        modules:
-          Intel471IndicatorsPuller:
-            type: type_1
-            setup_class: Intel471IndicatorsPullerSetup
-            module_properties:
-              base_tag: intel471.malware.indicators
-              count: 100
       service_1:
         type: predefined
         modules:
