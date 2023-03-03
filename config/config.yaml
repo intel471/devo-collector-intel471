@@ -65,14 +65,3 @@ inputs:
     services:
       service_1:
         request_period_in_seconds: 15
-      rate_limiter_1:
-        request_period_in_seconds: 5
-        requests_limits:
-          - period: 1d
-            number_of_requests: -1
-          - period: 1h
-            number_of_requests: -1
-          - period: 1m
-            number_of_requests: -1
-          - period: 1s
-            number_of_requests: -1
