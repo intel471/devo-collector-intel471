@@ -64,4 +64,4 @@ inputs:
         number_of_requests: -1
     services:
       service_1:
-        request_period_in_seconds: 15
+        request_period_in_seconds: 1800
