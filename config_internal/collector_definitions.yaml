@@ -71,9 +71,7 @@ collector_inputs:
           Intel471IndicatorsPuller:
             type: type_1
             setup_class: Intel471IndicatorsPullerSetup
-            module_properties:
-            submodule_calculator_class:
-            submodules_property:
+            request_period_in_seconds: 1800
             requests_limits:
               - period: 1m
                 number_of_requests: 10000
