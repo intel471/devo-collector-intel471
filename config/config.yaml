@@ -1,5 +1,5 @@
 globals:
-  debug: false
+  debug: true
   id: not_used
   name: intel471_collector
   persistence:
@@ -39,20 +39,19 @@ outputs:
 #      port: 13000
 #      period_sender_stats_in_seconds: 60
 #      concurrent_connections: 2
-  console_1:
-    type: console
+  # console_1:
+  #   type: console
 
 inputs:
   intel471_input:
-    id: <short_unique_id>
+    id: 1
     enabled: true
     credentials:
-      username: ${TITAN_USR}
-      password: ${TITAN_PWD}
+      username:
+      password:
     environment: prod
     parameters:
-      duration: 90    # n days of indicators to collect
-      type: *         # indicator type (ipv4 or url)
+      duration: 30  # n days of indicators to collect
     requests_limits:
       - period: 1d
         number_of_requests: -1
@@ -64,4 +63,3 @@ inputs:
         number_of_requests: -1
     services:
       service_1:
-        request_period_in_seconds: 1800
