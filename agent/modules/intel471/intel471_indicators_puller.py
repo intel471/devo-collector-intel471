@@ -89,7 +89,7 @@ class Intel471IndicatorsPuller(CollectorPullerAbstract):
         self.collector_variables['lookup_key']: str = 'uid'
         self.collector_variables['lookup_status']: str = None
 
-        self.collector_variables['status']: dict[str, bool] = {'file': False, 'ipv4': False, 'url': False}
+        self.collector_variables['status']: list[str, bool] = {'file': False, 'ipv4': False, 'url': False}
 
         self.log_debug(f'{self.name} Finalizing the execution of init_variables()')
 
@@ -130,6 +130,7 @@ class Intel471IndicatorsPuller(CollectorPullerAbstract):
         previous_state = self.persistence_object.load_state(no_log_traces=True)
         if previous_state:
             self.collector_variables['api_params']['cursor'] = previous_state.get('cursor')
+            self.collector_variables['status'] = previous_state.get('status')
 
     def pull(self, retrieving_timestamp: datetime):
         """ Pull method """
@@ -146,7 +147,6 @@ class Intel471IndicatorsPuller(CollectorPullerAbstract):
             api_response = api_instance.indicators_stream_get(**params)
             if not api_response.indicators:
                 state = {'cursor': params['cursor']}
-                self.persistence_object.save_state(state, no_log_traces=True)
                 break
             total_indicators += len(api_response.indicators)
             for indicator in api_response.indicators:
@@ -158,11 +158,17 @@ class Intel471IndicatorsPuller(CollectorPullerAbstract):
                     expired += 1
             params['cursor'] = api_response.cursor_next
 
-        [self.send_to_devo(content, type) for type, content in contents.items()]  # Send data to Devo
+        [self.send_to_devo(content, type) for type, content in contents.items() if content]  # Send data to Devo
 
         self.log_info(f'{total_indicators} indicators sent to output')
         self.log_info(f'{expired} indicators not sent to output because expired')
         self.log_info(f"{len(contents['file'])} file indicators, {len(contents['ipv4'])} ipv4 indicators, {len(contents['url'])} url indicators")
+
+        self.log_debug('Saving state')
+        state['status'] = self.collector_variables['status']
+        self.persistence_object.save_state(state, no_log_traces=True)
+        self.log_debug('Saved state')
+
         self.log_debug('Finalizing pull()')
 
     def pull_pause(self, wait: bool = None) -> None:
