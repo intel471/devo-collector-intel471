@@ -22,7 +22,7 @@ class Intel471IndicatorsPullerSetup(CollectorPullerSetupAbstract):
 
         configuration = Configuration(username=username, password=password)
         api_client = ApiClient(configuration)
-        api_client.user_agent += '; Devo Malware Intel Collector v1.0'
+        api_client.user_agent += '; Devo Intel 471 Malware Indicators Collector v1.0'
         api_instance = IndicatorsApi(api_client)
 
         self.collector_variables['api_instance'] = api_instance
