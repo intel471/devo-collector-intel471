@@ -65,6 +65,18 @@ collector_inputs:
             - password
           value: "****"
     services:
+      girs_service:
+        type: predefined
+        modules:
+          Intel471GIRsPuller:
+            type: type_1
+            setup_class: Intel471GIRsPullerSetup
+            request_period_in_seconds: 1800
+            requests_limits:
+              - period: 1m
+                number_of_requests: 10000
+              - period: 2m
+                number_of_requests: 10000
       indicators_service:
         type: predefined
         modules:

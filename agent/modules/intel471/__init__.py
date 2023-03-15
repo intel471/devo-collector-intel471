@@ -1,2 +1,5 @@
 from .intel471_indicators_puller import Intel471IndicatorsPuller
 from .intel471_indicators_puller_setup import Intel471IndicatorsPullerSetup
+
+from .intel471_girs_puller import Intel471GIRsPuller
+from .intel471_girs_puller_setup import Intel471GIRsPullerSetup
