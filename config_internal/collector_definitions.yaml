@@ -65,7 +65,7 @@ collector_inputs:
             - password
           value: "****"
     services:
-      service_1:
+      indicators_service:
         type: predefined
         modules:
           Intel471IndicatorsPuller:

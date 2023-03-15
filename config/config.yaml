@@ -62,4 +62,4 @@ inputs:
       - period: 1s
         number_of_requests: -1
     services:
-      service_1:
+      indicators_service:
