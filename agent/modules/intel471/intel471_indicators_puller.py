@@ -6,8 +6,8 @@ from devocollectorsdk.message.lookup_job_factory import LookupJobFactory
 from titan_client.models import IndicatorSearchSchema
 
 # noinspection PyUnresolvedReferences
-from agent.modules.intel471_malware_intel.intel471_indicators_puller_setup import Intel471IndicatorsPullerSetup
-from agent.modules.intel471_malware_intel.exceptions.exceptions import *
+from agent.modules.intel471.intel471_indicators_puller_setup import Intel471IndicatorsPullerSetup
+from agent.modules.intel471.exceptions.exceptions import *
 
 log = logging.getLogger(__name__)
 
