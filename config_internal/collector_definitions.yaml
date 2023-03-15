@@ -71,7 +71,7 @@ collector_inputs:
           Intel471GIRsPuller:
             type: type_1
             setup_class: Intel471GIRsPullerSetup
-            request_period_in_seconds: 1800
+            request_period_in_seconds: 86400
             requests_limits:
               - period: 1m
                 number_of_requests: 10000
