@@ -67,7 +67,6 @@ class Intel471GIRsPuller(CollectorPullerAbstract):
 
         previous_state = self.persistence_object.load_state(no_log_traces=True)
         if previous_state:
-            self.collector_variables['api_params']['cursor'] = previous_state.get('cursor')
             self.collector_variables['status'] = previous_state.get('status')
 
     def pull(self, retrieving_timestamp: datetime):
