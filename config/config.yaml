@@ -51,7 +51,7 @@ inputs:
       password:
     environment: prod
     parameters:
-      duration: 30  # n days of indicators to collect
+      duration_in_days: 30  # n days of indicators to collect
     requests_limits:
       - period: 1d
         number_of_requests: -1

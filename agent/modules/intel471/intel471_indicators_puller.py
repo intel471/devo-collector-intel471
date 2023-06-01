@@ -44,7 +44,7 @@ class Intel471IndicatorsPuller(CollectorPullerAbstract):
         self.collector_variables['password'] = password
 
         parameters: dict[str, int] = input_config.get('parameters')
-        duration: int = parameters.get('duration')
+        duration: int = parameters.get('duration_in_days')
         self.collector_variables['api_params']: dict = {'count': 100, '_from': self.get_from_timestamp(duration)}
 
         base_headers: list[str] = [
