@@ -52,15 +52,6 @@ inputs:
     environment: prod
     parameters:
       duration_in_days: 30  # n days of indicators to collect
-    requests_limits:
-      - period: 1d
-        number_of_requests: -1
-      - period: 1h
-        number_of_requests: -1
-      - period: 1m
-        number_of_requests: -1
-      - period: 1s
-        number_of_requests: -1
     services:
       girs_service:
       indicators_service:
