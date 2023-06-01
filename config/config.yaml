@@ -44,7 +44,7 @@ outputs:
 
 inputs:
   intel471_input:
-    id: 1
+    id: titan
     enabled: true
     credentials:
       username:
