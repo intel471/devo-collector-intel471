@@ -4,6 +4,7 @@ from typing import Dict, List
 
 from devocollectorsdk.inputs.collector_puller_abstract import CollectorPullerAbstract
 from devocollectorsdk.message.lookup_job_factory import LookupJobFactory
+from titan_client.exceptions import ApiException, NotFoundException, UnauthorizedException
 
 # noinspection PyUnresolvedReferences
 from agent.modules.intel471.intel471_girs_puller_setup import Intel471GIRsPullerSetup
@@ -79,16 +80,26 @@ class Intel471GIRsPuller(CollectorPullerAbstract):
         api_instance = self.collector_variables['api_instance']
         params = self.collector_variables['api_params']
 
-        api_response = api_instance.girs_get(**params)
-        total_girs = api_response.gir_total_count
-        girs = api_response.girs
-        collected = len(girs)
-
-        while collected < total_girs:
-            params['offset'] += params['count']
+        try:
             api_response = api_instance.girs_get(**params)
-            girs.extend(api_response.girs)
-            collected += len(api_response.girs)
+            total_girs = api_response.gir_total_count
+            girs = api_response.girs
+            collected = len(girs)
+
+            while collected < total_girs:
+                params['offset'] += params['count']
+                api_response = api_instance.girs_get(**params)
+                girs.extend(api_response.girs)
+                collected += len(api_response.girs)
+        except UnauthorizedException:
+            self.log_error(f'{self.__class__.__name__}[CODE:401] Unauthorised. Please check your TITAN credentials (email and API key) are configured correctly.')
+        except NotFoundException:
+            self.log_error(f'{self.__class__.__name__}[CODE:404] Not subscribed to this feed. Please contact your CSR to enquire about this feed.')
+        except ApiException as e:
+            if e.status == '429':
+                self.log_error(f'{self.__class__.__name__}[CODE:429] Maximum API request limit hit. Please wait to try again or contact your CSR to increase limit if usage requires.')
+            else:
+                self.log_error(e)
 
         contents = self.girs_mappings(girs)
 
@@ -110,18 +121,6 @@ class Intel471GIRsPuller(CollectorPullerAbstract):
     def pull_stop(self) -> None:
         """Not required for this collector"""
         pass
-
-    def check_status_code(self, code: str):
-        """ Check response status code """
-        # Check is user's TITAN credentials are configured correctly
-        if code == '401':
-            raise UnauthorisedException(401, 'Unauthorised. Please check your TITAN credentials (email and API key) are configured correctly.')
-        # Check if user's is authorised to retrieve data from queried API endpoint
-        elif code == '404':
-            raise NoAccessException(404, 'No access to this feed. Please contact your CSR to enquire about this feed.')
-        # Check if user has reached maximum API request limit
-        elif code == '429':
-            raise MaxLimitException(429, 'Maximum API request limit hit. Please wait to try again or contact your CSR to increase limit if usage requires.')
 
     def girs_mappings(self, girs: list):
         mappings = []

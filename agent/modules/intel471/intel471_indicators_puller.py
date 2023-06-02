@@ -3,6 +3,7 @@ from datetime import datetime, timedelta, timezone
 
 from devocollectorsdk.inputs.collector_puller_abstract import CollectorPullerAbstract
 from devocollectorsdk.message.lookup_job_factory import LookupJobFactory
+from titan_client.exceptions import ApiException, NotFoundException, UnauthorizedException
 from titan_client.models import IndicatorSearchSchema
 
 # noinspection PyUnresolvedReferences
@@ -151,20 +152,30 @@ class Intel471IndicatorsPuller(CollectorPullerAbstract):
         api_instance = self.collector_variables['api_instance']
         params = self.collector_variables['api_params']
 
-        while True:
-            api_response = api_instance.indicators_stream_get(**params)
-            if not api_response.indicators:
-                state = {'cursor': params['cursor']}
-                break
-            total_indicators += len(api_response.indicators)
-            for indicator in api_response.indicators:
-                # Only parse and send unexpired indicators
-                if indicator.data.expiration > int(datetime.now(timezone.utc).timestamp() * 1000):
-                    type, content = self.parse_indicator(indicator)
-                    contents[type].append(content)
-                else:
-                    expired += 1
-            params['cursor'] = api_response.cursor_next
+        try:
+            while True:
+                api_response = api_instance.indicators_stream_get(**params)
+                if not api_response.indicators:
+                    state = {'cursor': params['cursor']}
+                    break
+                total_indicators += len(api_response.indicators)
+                for indicator in api_response.indicators:
+                    # Only parse and send unexpired indicators
+                    if indicator.data.expiration > int(datetime.now(timezone.utc).timestamp() * 1000):
+                        type, content = self.parse_indicator(indicator)
+                        contents[type].append(content)
+                    else:
+                        expired += 1
+                params['cursor'] = api_response.cursor_next
+        except UnauthorizedException:
+            self.log_error(f'{self.__class__.__name__}[CODE:401] Unauthorised. Please check your TITAN credentials (email and API key) are configured correctly.')
+        except NotFoundException:
+            self.log_error(f'{self.__class__.__name__}[CODE:404] Not subscribed to this feed. Please contact your CSR to enquire about this feed.')
+        except ApiException as e:
+            if e.status == '429':
+                self.log_error(f'{self.__class__.__name__}[CODE:429] Maximum API request limit hit. Please wait to try again or contact your CSR to increase limit if usage requires.')
+            else:
+                self.log_error(e)
 
         [self.send_to_devo(content, type) for type, content in contents.items() if content]  # Send data to Devo
 
@@ -186,18 +197,6 @@ class Intel471IndicatorsPuller(CollectorPullerAbstract):
     def pull_stop(self) -> None:
         """Not required for this collector"""
         pass
-
-    def check_status_code(self, code: str):
-        """ Check response status code """
-        # Check is user's TITAN credentials are configured correctly
-        if code == '401':
-            raise UnauthorisedException(401, 'Unauthorised. Please check your TITAN credentials (email and API key) are configured correctly.')
-        # Check if user's is authorised to retrieve data from queried API endpoint
-        elif code == '404':
-            raise NoAccessException(404, 'No access to this feed. Please contact your CSR to enquire about this feed.')
-        # Check if user has reached maximum API request limit
-        elif code == '429':
-            raise MaxLimitException(429, 'Maximum API request limit hit. Please wait to try again or contact your CSR to increase limit if usage requires.')
 
     def get_from_timestamp(self, ndays: int) -> int:
         """ Generate _from timestamp """
