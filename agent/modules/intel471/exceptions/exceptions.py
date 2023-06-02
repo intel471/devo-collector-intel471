@@ -21,3 +21,9 @@ class NoAccessException(BaseCollectorException):
 
 class UnauthorisedException(BaseCollectorException):
     pass
+
+class MissingDurationException(BaseCollectorException):
+    pass
+
+class InvalidDurationException(BaseCollectorException):
+    pass

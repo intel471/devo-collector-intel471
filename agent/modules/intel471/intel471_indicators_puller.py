@@ -45,6 +45,14 @@ class Intel471IndicatorsPuller(CollectorPullerAbstract):
 
         parameters: dict[str, int] = input_config.get('parameters')
         duration: int = parameters.get('duration_in_days')
+
+        if duration is None:
+            raise MissingDurationException(4, 'Missing "duration_in_days" value from "parameters" section in configuration')
+        elif not isinstance(duration, int):
+            raise InvalidDurationException(5, '"duration_in_days" value must be of "int" type')
+        elif duration < 1:
+            raise InvalidDurationException(6, '"duration_in_days" value must be >= 1')
+
         self.collector_variables['api_params']: dict = {'count': 100, '_from': self.get_from_timestamp(duration)}
 
         base_headers: list[str] = [
