@@ -44,6 +44,9 @@ class Intel471GIRsPuller(CollectorPullerAbstract):
             raise CredentialException(3,'Missing required "password" property from "credentials" section in configuration')
         self.collector_variables['password'] = password
 
+        if service_config and 'request_period_in_seconds' in service_config:
+            raise DefaultsOverrideException(7, 'Default "request_period_in_seconds" cannot be overridden')
+
         self.collector_variables['api_params']: dict = {'count': 100, 'offset': 0}
 
         self.collector_variables['headers']: List[str] = ['gir_path', 'gir_name', 'gir_description']

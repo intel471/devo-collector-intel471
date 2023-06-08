@@ -27,3 +27,6 @@ class MissingDurationException(BaseCollectorException):
 
 class InvalidDurationException(BaseCollectorException):
     pass
+
+class DefaultsOverrideException(BaseCollectorException):
+    pass

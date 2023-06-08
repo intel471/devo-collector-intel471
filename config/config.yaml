@@ -54,6 +54,4 @@ inputs:
       duration_in_days: 30  # n days of indicators to collect
     services:
       girs_service:
-        request_period_in_seconds: 86400
       indicators_service:
-        request_period_in_seconds: 1800

@@ -56,6 +56,9 @@ class Intel471IndicatorsPuller(CollectorPullerAbstract):
 
         self.collector_variables['api_params']: dict = {'count': 100, '_from': self.get_from_timestamp(duration)}
 
+        if service_config and 'request_period_in_seconds' in service_config:
+            raise DefaultsOverrideException(7, 'Default "request_period_in_seconds" cannot be overridden')
+
         base_headers: list[str] = [
             'uid',
             'first_seen',
