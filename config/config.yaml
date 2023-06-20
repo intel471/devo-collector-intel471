@@ -1,7 +1,7 @@
 globals:
-  debug: false
+  debug: true
   id: not_used
-  name: example_collector
+  name: intel471_collector
   persistence:
     type: filesystem
     config:
@@ -39,210 +39,19 @@ outputs:
 #      port: 13000
 #      period_sender_stats_in_seconds: 60
 #      concurrent_connections: 2
-  console_1:
-    type: console
+  # console_1:
+  #   type: console
 
 inputs:
-  example_input:
-    id: <short_unique_id>
+  intel471_input:
+    id: titan
     enabled: true
     credentials:
-      username: john_doe
-      password: 1234
+      username:
+      password:
     environment: prod
-    requests_limits:
-      - period: 1d
-        number_of_requests: -1
-      - period: 1h
-        number_of_requests: -1
-      - period: 1m
-        number_of_requests: -1
-      - period: 1s
-        number_of_requests: -1
+    parameters:
+      duration_in_days: 30  # n days of indicators to collect
     services:
-      service_1:
-        request_period_in_seconds: 15
-        connection_str: "Endpoint=sb://<name>.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=<access_key_value>"
-#      service_2:
-#        request_period_in_seconds: 15
-#      service_3:
-#        request_period_in_seconds: 15
-#      service_4:
-#        request_period_in_seconds: 15
-#      service_10:
-#        request_period_in_seconds: 15
-#        max_number_of_messages_per_page: 1000
-#      service_11:
-#        request_period_in_seconds: 1
-#        max_number_of_messages_per_page: 500
-#        regions:
-#          - region_000:
-#          - region_001
-#          - region_002
-#          - region_003
-#          - region_004
-#          - region_005
-#          - region_006
-#          - region_007
-#          - region_008
-#          - region_009
-#          - region_010
-#      service_12:
-#        request_period_in_seconds: 10
-#        max_number_of_messages_per_page: 10000
-#        regions:
-#          - region_001
-#          - region_002
-#          - region_003
-#          - region_004
-#          - region_005
-#          - region_006
-#          - region_007
-#          - region_008
-#          - region_009
-#          - region_010
-#          - region_011
-#          - region_012
-#          - region_013
-#          - region_014
-#          - region_015
-#          - region_016
-#          - region_017
-#          - region_018
-#          - region_019
-#          - region_020
-#          - region_021
-#          - region_022
-#          - region_023
-#          - region_024
-#          - region_025
-#          - region_026
-#          - region_027
-#          - region_028
-#          - region_029
-#          - region_030
-#          - region_031
-#          - region_032
-#          - region_033
-#          - region_034
-#          - region_035
-#          - region_036
-#          - region_037
-#          - region_038
-#          - region_039
-#          - region_040
-#      service_20:
-#        requests_per_second: 4
-#        regions:
-#          - region_1: "property_1"
-#          - region_2: "property_2"
-#      service_30:
-#        types:
-#          - type_3
-#      custom_1:
-#        requests_per_second: 4
-#        types:
-#          - type_1:
-#              request_period_in_seconds: 12
-#              requests_per_second: 3
-#          - type_2
-#          - type_3:
-#              request_period_in_seconds: 12
-#        regions:
-#          - region_1: "property_1"
-#          - region_2: "property_2"
-#      service_99:
-#        request_period_in_seconds: 10
-#        max_number_of_messages_per_page: 10
-#        message_size_in_bytes: 2048
-#        stop_after_in_seconds: 60
-#        override_global_debug: true
-#        regions:
-#          - region_001
-#          - region_002
-#          - region_003
-#          - region_004
-#          - region_005
-#          - region_006
-#          - region_007
-#          - region_008
-#          - region_009
-#          - region_010
-#          - region_011
-#          - region_012
-#          - region_013
-#          - region_014
-#          - region_015
-#          - region_016
-#          - region_017
-#          - region_018
-#          - region_019
-#          - region_020
-#          - region_021
-#          - region_022
-#          - region_023
-#          - region_024
-#          - region_025
-#          - region_026
-#          - region_027
-#          - region_028
-#          - region_029
-#          - region_030
-#          - region_031
-#          - region_032
-#          - region_033
-#          - region_034
-#          - region_035
-#          - region_036
-#          - region_037
-#          - region_038
-#          - region_039
-#          - region_040
-
-#      failure_1:
-#        request_period_in_seconds: 5
-
-#      failure_2:
-#        request_period_in_seconds: 5
-
-#      template_1:
-#        request_period_in_seconds: 5
-#        rate_limiter:
-#          period_in_seconds: 60
-#          requests_limit_in_units: 1
-#
-      rate_limiter_1:
-        request_period_in_seconds: 5
-        requests_limits:
-          - period: 1d
-            number_of_requests: -1
-          - period: 1h
-            number_of_requests: -1
-          - period: 1m
-            number_of_requests: -1
-          - period: 1s
-            number_of_requests: -1
-
-      template_example_puller_1:
-        request_period_in_seconds: 5
-        obfuscation_data:
-          - name:
-              - civil_state
-              - married
-          - name:
-              - address
-              - "*"
-          - name:
-              - civil_state
-              - sons
-              - '*'
-            value: "DEVO"
-        requests_limits:
-          - period: 1d
-            number_of_requests: -1
-          - period: 1h
-            number_of_requests: -1
-          - period: 1m
-            number_of_requests: -1
-          - period: 1s
-            number_of_requests: -1
+      girs_service:
+      indicators_service:

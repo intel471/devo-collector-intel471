@@ -1,11 +1,16 @@
 {
   "title": "Intel 471 Malware Intelligence collector - Integrations Factory",
-  "package_name": "intel471_malware_intel",
+  "package_name": "intel471_malware_intelligence",
   "version": "1.0.0",
-  "version_description": "Initial version of Intel 471 Malware Intel collector for Devo",
+  "channel": "official",
+  "private_domain": "<domain_name> in case of <channel> is <private>",
   "labels": ["malware", "intelligence", "indicators"],
   "collector_type": "continuous",
-  "package_description": "The collector retrieves events information from Intel 471 TITAN API's Indicators endpoint",
+  "version_description": "Initial version of Intel 471 Malware Intelligence collector for Devo",
+  "package_description": "The collector retrieves events information from Intel 471 TITAN API endpoitns",
   "owner": "mchong@intel471.com",
-  "allow_validation": "0"
+  "has_test": false,
+  "test_timeout": 0,
+  "api_mode": false,
+  "org": "Intel 471"
 }

@@ -1,1 +1,1 @@
-from .example import *
+from .intel471 import *

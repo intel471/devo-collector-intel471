@@ -8,18 +8,14 @@
 Collects Malware Indicators via Intel 471 TITAN API.
 
 ## Vendor Setup
-
-This section will contain all the information required to have an environment ready to be collected, such as:
-  * How to create an account
-  * How to create the required setup in the environment
-  * How to generate some data to be collected
-  * How to create credentials (and also the required permissions)
+To use this collector, the user must be an existing Intel 471 customer with TITAN API access.
+- **Existing customers**
+  Please contact <support@intel471.com> to enable API access if not currently enabled
+- **New customers**
+  Please contact sales at https://intel471.com/company/sales-contact-us
 
 ## Minimal Configuration Required
-
-This section will contain all the information required to have the collector instance running, such as:
-  * Authentication info
-  * List of existing services (remarking mandatory/optional parameters)
+Obtain your API credentials from the API page of TITAN portal. The username will be the email address registered with TITAN and the password is the API key.
 
 ## Build and run the collector
 
@@ -41,10 +37,10 @@ This is a screenshot of a running configuration:
 
 >## **Note**
 >
-> The required Python package (`devo-collector-sdk==1.6.1`) is not still published in a public repository (the process on going) and, meanwhile this is done, a manual installation has to be done, it can be used the following command:
+> The required Python package (`devo-collector-sdk==1.7.2`) is not still published in a public repository (the process on going) and, meanwhile this is done, a manual installation has to be done, it can be used the following command:
 >
->```script 
->pip install ./devo-collector-sdk-1.6.1.tar.gz
+>```script
+>pip install ./devo-collector-sdk-1.7.2.tar.gz
 >```
 
 ---
@@ -59,17 +55,17 @@ The following bash script must be executed from the collector's root directory.
 
 ### Running as a Docker container
 
-Change `<version>` with a proper value.
+Change `<version>` to current version of the collector. (*Current version is* `1.0.0`)
 ```bash
 docker run \
---name collector-cylance-if \
+--name intel471-collector \
 --volume $PWD/certs:/devo-collector/certs \
 --volume $PWD/config:/devo-collector/config \
 --volume $PWD/credentials:/devo-collector/credentials \
 --volume $PWD/state:/devo-collector/state \
 --env CONFIG_FILE=config.yaml \
 --rm --interactive --tty \
-{docker_image_name}:<version>
+devo.com/collectors/intel471:<version>
 ```
 
 ## Vulnerabilities check with Trivy
@@ -78,14 +74,14 @@ The security vulnerabilities can be checked using the Trivy software (https://tr
 
 ### Local installation
 
-Change `<version>` with a proper value.
+Change `<version>` to current version of the collector.
 ```bash
 trivy image --severity CRITICAL,HIGH,UNKNOWN path_to_collector_image:<version>
 ```
 
 ### Docker
 
-Change `<version>` with a proper value.
+Change `<version>` to current version of the collector.
 ```bash
-docker run aquasec/trivy image --severity CRITICAL,HIGH,UNKNOWN devo.com/collectors/ms-graph-collector-if:<version>
+docker run aquasec/trivy image --severity CRITICAL,HIGH,UNKNOWN devo.com/collectors/intel471:<version>
 ```
