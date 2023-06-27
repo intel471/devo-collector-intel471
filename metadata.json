@@ -1,9 +1,8 @@
 {
-  "title": "Intel 471 Malware Intelligence collector - Integrations Factory",
+  "title": "Intel 471 Malware Intelligence collector - Community",
   "package_name": "intel471_malware_intelligence",
   "version": "1.0.0",
-  "channel": "official",
-  "private_domain": "<domain_name> in case of <channel> is <private>",
+  "channel": "community",
   "labels": ["malware", "intelligence", "indicators"],
   "collector_type": "continuous",
   "version_description": "Initial version of Intel 471 Malware Intelligence collector for Devo",
